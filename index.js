@@ -1,6 +1,7 @@
 const Hapi = require('@hapi/hapi');
 const Basic = require('@hapi/basic')
 const config = require('./config');
+const db = require('./db');
 const { basicValidate } = require('./utils/auth');
 
 const IndexRouter = require('./router');
