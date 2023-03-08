@@ -2,18 +2,19 @@ const Hapi = require('@hapi/hapi');
 const Basic = require('@hapi/basic')
 const config = require('./config');
 const db = require('./db');
-const {UpdateCard}  = require('./db/cards');
 const { basicValidate } = require('./utils/auth');
 
 const IndexRouter = require('./router');
 const UserRouter = require('./router/user');
+const CardsRouter = require('./router/cards');
 
 const init = async () => {
     const server = Hapi.server(config);
     await server.register(Basic);
-    server.auth.strategy('user-auth', 'basic', { validate: basicValidate });
+    server.auth.strategy('user-auth','basic', { validate: basicValidate });
     IndexRouter(server);
     UserRouter(server);
+    CardsRouter(server);
     await server.start();
     console.log('server started on %s', server.info.uri);
     // InsertUser({
