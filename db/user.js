@@ -1,40 +1,29 @@
 const { conn } = require('./index')
 
-const InsertUser = (params) => {
-    conn.execute(`INSERT INTO tb_user
+const InsertUser = async (params) => {
+    return await (await conn()).execute(`INSERT INTO tb_user
    (username, password, cover, sex, email, boi, create_date, is_active)
    VALUES(?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, 1);
    `, [params?.username, params?.password, params?.cover, params?.sex, params?.email, params?.boi])
 }
 
-const UpdateUser = (id, params) => {
-    conn.execute(`UPDATE tb_user
-    SET password=?, cover=?, sex=?, email=?, boi=?, update_date=CURRENT_TIMESTAMP
+const UpdateUser = async (id, params) => {
+    return await (await conn()).execute(`UPDATE tb_user
+    SET username=?,password=?, cover=?, sex=?, email=?, boi=?, update_date=CURRENT_TIMESTAMP
     WHERE id=${id};
-    `, [params?.password, params?.cover, params?.sex, params?.email, params?.boi])
+    `, [params?.username, params?.password, params?.cover, params?.sex, params?.email, params?.boi])
 }
 
-const DeleteUser = (id) => {
-    conn.execute(`UPDATE tb_user SET is_active=0 WHERE id=?;`, [id])
+const DeleteUser = async (id) => {
+    return await (await conn()).execute(`UPDATE tb_user SET is_active=1 WHERE id=?;`, [id])
 }
 
-const findOneUser = (username) => {
-    conn.query(
-        `SELECT * FROM tb_user WHERE username = "${username}"`,
-        function (err, results, fields) {
-            console.log(results);
-        }
-    );
-
+const findOneUser = async (id) => {
+    return await (await conn()).query(`SELECT * FROM tb_user WHERE id = "${id}"`);
 }
 
-const findAllUser = () => {
-    conn.query(
-        `SELECT * FROM tb_user`,
-        function (err, results, fields) {
-            console.log(results);
-        }
-    );
+const findAllUser = async () => {
+    return await (await conn()).query(`SELECT * FROM tb_user`);
 }
 
 module.exports = {
