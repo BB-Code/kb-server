@@ -1,8 +1,8 @@
-const IndexRouter = (server) =>{
+const IndexRouter = (server) => {
     server.route({
         method: 'GET',
         path: '/',
-        handler: (req,h)=>{
+        handler: (req, h) => {
             return 'hello hapi'
         }
     })
