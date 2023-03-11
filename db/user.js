@@ -4,7 +4,7 @@ const InsertUser = async (params) => {
     return await (await conn()).execute(`INSERT INTO tb_user
    (username, password,sex, email, boi, create_date, is_active)
    VALUES(?, ?, ?, ?,?, CURRENT_TIMESTAMP, 1);
-   `, [params?.username, params?.password,params?.sex, params?.email, params?.boi])
+   `, [params?.username, params?.password, params?.sex, params?.email, params?.boi])
 }
 
 const UpdateUser = async (id, params) => {

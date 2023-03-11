@@ -91,7 +91,7 @@ const UserRouter = [
             validate: {
                 params: Joi.object({
                     id: Joi.number().integer().required()
-                  }).options({ stripUnknown: true }),
+                }).options({ stripUnknown: true }),
                 payload: Joi.object({
                     username: Joi.string().max(50),
                     password: Joi.string().max(32),
@@ -113,7 +113,7 @@ const UserRouter = [
                 boi: req.payload.boi
             };
             let res = await UpdateUser(req.params.id, params)
-           
+
             return {
                 'message': res
             }

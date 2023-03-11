@@ -18,7 +18,7 @@ const options = {
 
 const init = async () => {
     const server = Hapi.server(config);
-    await server.register([Basic, Inert,Vision,{
+    await server.register([Basic, Inert, Vision, {
         plugin: Swagger,
         options: options
     }]);
