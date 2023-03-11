@@ -13,7 +13,7 @@ const options = {
     info: {
         title: `${Pack.name.toUpperCase()} API Documentation`,
         version: Pack.version,
-    },
+    }
 };
 
 const init = async () => {

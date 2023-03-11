@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const { findAllCard, InsertCard, UpdateCard, DeleteCard, findOneCard } = require('../db/cards');
-const { cardModel, cardMessage } = require('../model/card');
-
+const { cardModel } = require('../model/card');
+const { message} = require('../model/common');
 const prefix = "cards";
 const CardsRouter = [
   {
@@ -75,7 +75,7 @@ const CardsRouter = [
       //     parse: true,
       //     output: 'file'
       // },
-      response: { schema: cardMessage, failAction: 'log' }
+      response: { schema: message, failAction: 'log' }
     },
     handler: async (req) => {
       const params = {
@@ -115,7 +115,7 @@ const CardsRouter = [
           folder: Joi.string().max(250),
         })
       },
-      response: { schema: cardMessage, failAction: 'log' }
+      response: { schema: message, failAction: 'log' }
     },
     handler: async (req) => {
       const params = {
@@ -147,7 +147,7 @@ const CardsRouter = [
           id: Joi.number().integer().required().example('1')
         }).options({ stripUnknown: true })
       },
-      response: { schema: cardMessage, failAction: 'log' }
+      response: { schema: message, failAction: 'log' }
     },
     handler: async (req) => {
       let res = await DeleteCard(req.params.id)
