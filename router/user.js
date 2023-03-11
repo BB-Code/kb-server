@@ -1,12 +1,14 @@
 const { findAllUser, InsertUser, UpdateUser, DeleteUser, findOneUser } = require('../db/user');
 
 const prefix = "users";
-const UserRouter = (server) => {
-    server.route({
+const UserRouter = [
+    {
         method: 'GET',
         path: `/${prefix}`,
         options: {
-            auth: 'user-auth'
+            tags: ['api'],
+            auth: 'user-auth',
+            description: '查询所有用户'
         },
         handler: async () => {
             let [res] = await findAllUser()
@@ -14,12 +16,14 @@ const UserRouter = (server) => {
                 'users': res
             }
         }
-    });
-    server.route({
+    },
+    {
         method: 'GET',
         path: `/${prefix}/{id}`,
         options: {
-            auth: 'user-auth'
+            tags: ['api'],
+            auth: 'user-auth',
+            description: '查询某个用户'
         },
         handler: async (req) => {
             let [res] = await findOneUser(req.params.id)
@@ -27,12 +31,14 @@ const UserRouter = (server) => {
                 'user': res
             }
         }
-    });
-    server.route({
+    },
+    {
         method: 'POST',
         path: `/${prefix}`,
         options: {
-            auth: 'user-auth'
+            tags: ['api'],
+            auth: 'user-auth',
+            description: '新增用户'
         },
         handler: async (req) => {
             const params = {
@@ -48,12 +54,14 @@ const UserRouter = (server) => {
                 'message': res
             }
         }
-    });
-    server.route({
+    },
+    {
         method: 'PUT',
         path: `/${prefix}/{id}`,
         options: {
-            auth: 'user-auth'
+            tags: ['api'],
+            auth: 'user-auth',
+            description: '更新用户'
         },
         handler: async (req) => {
             const params = {
@@ -69,13 +77,14 @@ const UserRouter = (server) => {
                 'message': res
             }
         }
-    });
-
-    server.route({
+    },
+    {
         method: 'Delete',
         path: `/${prefix}/{id}`,
         options: {
-            auth: 'user-auth'
+            tags: ['api'],
+            auth: 'user-auth',
+            description: '删除用户'
         },
         handler: async (req) => {
             let res = await DeleteUser(req.params.id)
@@ -83,7 +92,7 @@ const UserRouter = (server) => {
                 'message': res
             }
         }
-    });
-}
+    }
+]
 
 module.exports = UserRouter;

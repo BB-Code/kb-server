@@ -1,20 +1,29 @@
 const Hapi = require('@hapi/hapi');
-const Basic = require('@hapi/basic')
+const Basic = require('@hapi/basic');
+const Swagger = require('hapi-swagger');
+const Inert = require('@hapi/inert');
+const Vision = require('@hapi/vision');
 const config = require('./config');
-const db = require('./db');
+require('./db');
 const { basicValidate } = require('./utils/auth');
+const Routers = require('./router');
+const Pack = require('./package.json');
 
-const IndexRouter = require('./router');
-const UserRouter = require('./router/user');
-const CardsRouter = require('./router/cards');
+const options = {
+    info: {
+        title: `${Pack.name.toUpperCase()} API Documentation`,
+        version: Pack.version,
+    },
+};
 
 const init = async () => {
     const server = Hapi.server(config);
-    await server.register(Basic);
+    await server.register([Basic, Inert,Vision,{
+        plugin: Swagger,
+        options: options
+    }]);
     server.auth.strategy('user-auth', 'basic', { validate: basicValidate });
-    IndexRouter(server);
-    UserRouter(server);
-    CardsRouter(server);
+    server.route(Routers);
     await server.start();
     console.log('server started on %s', server.info.uri);
 };

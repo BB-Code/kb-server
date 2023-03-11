@@ -19,8 +19,8 @@ const findOneCard = async (id) => {
     return await (await conn()).query(`SELECT * FROM tb_cards WHERE id = ${id}`);
 }
 
-const findAllCard = async () => {
-    return await (await conn()).query('SELECT * FROM tb_cards');
+const findAllCard = async (num) => {
+    return await (await conn()).query(`SELECT * FROM tb_cards limit ${num}`);
 }
 
 module.exports = {
